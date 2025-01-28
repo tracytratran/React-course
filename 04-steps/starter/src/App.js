@@ -10,7 +10,6 @@ export default function App() {
   return (
     <div>
       <Steps />
-      {/* <Steps /> */}
     </div>
   );
 }
@@ -19,8 +18,6 @@ function Steps() {
   const [step, setStep] = useState(1);
   const [isOpen, setIsOpen] = useState(true);
 
-  // const [test, setTest] = useState({ name: " Jonas" });
-
   function handlePrevious() {
     if (step > 1) setStep((s) => s - 1);
   }
@@ -28,14 +25,7 @@ function Steps() {
   function handleNext() {
     if (step < 3) {
       setStep((s) => s + 1);
-      // setStep((s) => s + 1);
     }
-
-    // BAD PRACTICE
-    // test.name = "Fred";
-
-    // GOOD PRACTICE
-    // setTest({ name: " Fred" });
   }
 
   return (
@@ -51,27 +41,53 @@ function Steps() {
             <div className={step >= 3 ? "active" : ""}>3</div>
           </div>
 
-          <p className="message">
+          {/* <p className="message">
             Step {step}: {messages[step - 1]}
-            {/* {test.name} */}
-          </p>
+          </p> */}
+          <StepMessage step={step}>{messages[step - 1]}</StepMessage>
 
           <div className="buttons">
-            <button
+            {/* <button
               style={{ backgroundColor: "#7950f2", color: "#fff" }}
               onClick={handlePrevious}
             >
               Previous
-            </button>
-            <button
+            </button> */}
+            <Button bgColor="#7950f2" textColor="#fff" onClick={handlePrevious}>
+              <span>👈</span> Previous
+            </Button>
+            {/* <button
               style={{ backgroundColor: "#7950f2", color: "#fff" }}
               onClick={handleNext}
             >
               Next
-            </button>
+            </button> */}
+            <Button bgColor="#7950f2" textColor="#fff" onClick={handleNext}>
+              Next<span>👉</span>
+            </Button>
           </div>
         </div>
       )}
     </>
+  );
+}
+
+function StepMessage({ step, children }) {
+  return (
+    <div className="message">
+      <h3>Step {step}</h3>
+      {children}
+    </div>
+  );
+}
+
+function Button({ bgColor, textColor, onClick, children }) {
+  return (
+    <button
+      style={{ backgroundColor: bgColor, color: textColor }}
+      onClick={onClick}
+    >
+      {children}
+    </button>
   );
 }
